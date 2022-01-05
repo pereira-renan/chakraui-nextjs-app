@@ -28,10 +28,14 @@ export default async function handler(req, res) {
       try {
         var begin = Date.now()
         var lastExecutionDate = new Date()
-          .toLocaleDateString()
+          .toLocaleString("pt-BR", { timeZone: "Brazil/East" })
           .slice(0, 10)
           .replace(/-/g, "/")
-        var lastExecutionTime = new Date().toLocaleTimeString()
+        var lastExecutionTime = new Date()
+          .toLocaleString("pt-BR", {
+            timeZone: "Brazil/East",
+          })
+          .ToString("HH:mm:ss")
 
         const { data } = await axios.get(url, {
           headers: {
