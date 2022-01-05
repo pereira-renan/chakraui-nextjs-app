@@ -28,12 +28,12 @@ export default async function handler(req, res) {
       try {
         var begin = Date.now()
         var lastExecutionDate = new Date()
-          .toLocaleString("pt-BR", { timeZone: "Brazil/East" })
+          .toLocaleString("pt-BR", { timeZone: "Brazil/Brasilia" })
           .slice(0, 10)
           .replace(/-/g, "/")
         var lastExecutionTime = new Date()
           .toLocaleString("pt-BR", {
-            timeZone: "Brazil/East",
+            timeZone: "Brazil/Brasilia",
           })
           .ToString("HH:mm:ss")
 
