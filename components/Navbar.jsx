@@ -12,21 +12,12 @@ const Navbar = () => {
       backgroundColor="#162056"
       height="60px"
     >
-      <Spacer />
       <Box fontSize="3xl" color="gray.100" fontWeight="bold" opacity="87%">
         <Link href="/">
-          <a>{process.env.title}</a>
+          <a>zenStatus</a>
         </Link>
       </Box>
       <Spacer />
-    </Center>
-  )
-}
-
-export default Navbar
-
-/*
-
       <IconButton
         icon={colorMode === "light" ? <BsFillSunFill /> : <BsFillMoonFill />}
         bg="#fc8181"
@@ -35,4 +26,8 @@ export default Navbar
       >
         Switch Mode
       </IconButton>
-*/
+    </Center>
+  )
+}
+
+export default Navbar

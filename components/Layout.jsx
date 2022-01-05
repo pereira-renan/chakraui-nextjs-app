@@ -5,10 +5,10 @@ import Footer from "./Footer"
 const Layout = ({ children }) => (
   <>
     <Head>
-      <title>{process.env.title}</title>
+      <title>zenStatus</title>
     </Head>
     <header>
-      <Navbar title={process.env.title} />
+      <Navbar />
     </header>
     <main>{children}</main>
     <footer></footer>
