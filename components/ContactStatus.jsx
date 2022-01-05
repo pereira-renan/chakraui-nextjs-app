@@ -2,8 +2,6 @@ import { Center, Text, Grid, Box, IconButton } from "@chakra-ui/react"
 import { GrUpdate } from "react-icons/gr"
 import React, { useState, useEffect } from "react"
 import { useRouter } from "next/router"
-import Router from "next/router"
-import NProgress from "nprogress"
 
 const firstColumn = "120px",
   secondColumn = "30px",

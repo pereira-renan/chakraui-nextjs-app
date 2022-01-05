@@ -3,6 +3,7 @@ import { getData } from "./api/status"
 import { Flex, Box } from "@chakra-ui/react"
 import { Status } from "../components/ContactStatus"
 import { SandInfo, SandOverview } from "../components/KeyInfo"
+import dbConnect from "../lib/dbConnect"
 
 export default function Test({
   contacts,
@@ -35,8 +36,8 @@ export default function Test({
 
 /* Retrieves pet(s) data from mongodb database */
 export async function getServerSideProps() {
+  await dbConnect()
   const response = await getData()
-  console.log(response)
   return {
     props: {
       channel: response?.statuses.channel,
