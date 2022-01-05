@@ -64,11 +64,23 @@ const ContactStatus = ({
 function Status({ contacts, time, date }) {
   // Similar ao componentDidMount e componentDidUpdate:
   useEffect(() => {
-    //fetchGames() // Fetch games when component is mounted
+    // Fetch games when component is mounted
   }, [])
   const router = useRouter()
 
   const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+  const checkData = async () => {
+    fetch("/api/status", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json("Updated."))
+      .then((result) => console.log(result))
+      .catch((err) => console.log("Error while updating."))
+  }
 
   const updateData = async () => {
     fetch("/api/status", {

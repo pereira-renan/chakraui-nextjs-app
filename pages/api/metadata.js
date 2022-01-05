@@ -18,15 +18,6 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const status = await getData()
-        res.status(200).json({ success: true, data: status })
-      } catch (error) {
-        res.status(400).json({ success: false })
-      }
-      break
-    case "POST":
-      console.log("debug1")
-      try {
         var begin = Date.now()
         var lastExecutionDate = new Date()
           .toLocaleString("pt-BR", { timeZone: "Brazil/East" })
@@ -35,13 +26,38 @@ export default async function handler(req, res) {
         var lastExecutionTime = new Date()
           .toLocaleString("pt-BR", { timeZone: "Brazil/East", hour12: false })
           .split(" ")[1]
+        var end = Date.now()
+        var timeElapsed = (end - begin) / 1000 + " secs"
+
+        metadata = {
+          lastExecutionDate,
+          lastExecutionTime,
+          timeElapsed,
+        }
+
+        res.status(200).json({ success: true, data: metadata })
+      } catch (error) {
+        res.status(400).json({ success: false })
+      }
+      break
+    case "POST":
+      try {
+        var begin = Date.now()
+        var lastExecutionDate = new Date()
+          .toLocaleString("pt-BR", { timeZone: "Brazil/Brasilia" })
+          .slice(0, 10)
+          .replace(/-/g, "/")
+        var lastExecutionTime = new Date()
+          .toLocaleString("pt-BR", {
+            timeZone: "Brazil/Brasilia",
+          })
+          .ToString("HH:mm:ss")
 
         const { data } = await axios.get(url, {
           headers: {
             Authorization: `Bearer ${process.env.customKey}`,
           },
         })
-        console.log("debug3")
 
         var channel = data.channel
         var keyword = data.keyword
@@ -53,7 +69,7 @@ export default async function handler(req, res) {
         for (let i = 0; i < allContacts.length; i++) {
           var id = allContacts[i].id
           var remaining = allContacts[i].credit.remaining
-          var expiresAt = allContacts[i].credit.expiresAt.replace(/-/g, "/")
+          var expiresAt = allContacts[i].credit.expiresAt
           var credit = {
             remaining,
             expiresAt,
