@@ -18,7 +18,7 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const status = await getData()
+        await getData()
         res.status(200).json({ success: true })
       } catch (error) {
         res.status(400).json({ success: false })
@@ -49,7 +49,7 @@ export default async function handler(req, res) {
 
         const contacts = []
         for (let i = 0; i < allContacts.length; i++) {
-          var id = allContacts[i].id
+          var id = allContacts[i].id.replace(/\d(?=\d{4})/g, "*")
           var remaining = allContacts[i].credit.remaining
           var expiresAt = allContacts[i].credit.expiresAt.replace(/-/g, "/")
           var credit = {
@@ -94,7 +94,7 @@ export default async function handler(req, res) {
         statusesDB
           .save()
           .then((res) => {
-            console.log("Scrapping data successfully inserted into DB.")
+            console.log("Data updated.")
           })
           .catch((err) => {
             console.log(err)

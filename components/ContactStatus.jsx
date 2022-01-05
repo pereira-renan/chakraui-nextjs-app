@@ -39,7 +39,7 @@ const ContactStatus = ({
 }) => (
   <Box py="10px" color="white" bg={tableInsideColor} borderTop="solid 1px">
     <Grid templateColumns="repeat(3, 1fr)" gap={6} minH="20px">
-      <Center minWidth={firstColumn}>{id.replace(/\d(?=\d{4})/g, "*")}</Center>
+      <Center minWidth={firstColumn}>{id}</Center>
       <Center minWidth={secondColumn} textAlign="center">
         {remaining == 0 ? (
           <Text color="red" fontWeight="bold">
