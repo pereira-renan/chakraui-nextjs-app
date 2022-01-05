@@ -1,6 +1,5 @@
 import Link from "next/link"
 import { Box, Spacer, Center, IconButton, useColorMode } from "@chakra-ui/react"
-import { GrUpdate } from "react-icons/gr"
 import { BsFillSunFill, BsFillMoonFill } from "react-icons/bs"
 
 const Navbar = () => {
@@ -27,14 +26,6 @@ const Navbar = () => {
 export default Navbar
 
 /*
-      <IconButton
-        icon={<GrUpdate />}
-        bg="#fc8181"
-        aria-label="Color mode switcher"
-        onClick={toggleColorMode}
-      >
-        Switch Mode
-      </IconButton>
 
       <IconButton
         icon={colorMode === "light" ? <BsFillSunFill /> : <BsFillMoonFill />}

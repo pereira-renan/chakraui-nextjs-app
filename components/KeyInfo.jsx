@@ -15,24 +15,24 @@ import { MdContentCopy } from "react-icons/md"
 
 const SandInfo = ({ keyword }) => (
   <Box>
-    <Popover colorScheme="red">
+    <Popover id={"details"} trigger="hover" colorScheme="red">
       <PopoverTrigger>
         <Button colorScheme="red">?</Button>
       </PopoverTrigger>
       <Portal>
         <PopoverContent>
-          <PopoverArrow />
-          <PopoverBody bg="#fc8181" color="white">
+          <PopoverArrow bg="red.400" />
+          <PopoverBody borderRadius={"5px"} bg="red.400" color="white">
             <Center px="10">
               {keyword}
               <Spacer />
               <Button
-                bg="#fc8181"
+                bg="gray.200"
                 onClick={() => {
                   navigator.clipboard.writeText(keyword)
                 }}
               >
-                <MdContentCopy />
+                <MdContentCopy color="black" />
               </Button>
             </Center>
           </PopoverBody>
@@ -45,8 +45,9 @@ const SandInfo = ({ keyword }) => (
 
 const SandOverview = ({ credit: { remaining, expiresAt } }) => (
   <Box py={"20px"}>
-    There are {remaining} interactions left, this limit will be renewed by{" "}
-    {expiresAt.split("T")[0]} at {expiresAt.match(/\d\d:\d\d/)}.
+    There are {remaining < 0 ? "no" : "no"} overall interactions left, this
+    limit will be renewed by {expiresAt.split("T")[0]} at{" "}
+    {expiresAt.match(/\d\d:\d\d/)}.
   </Box>
 )
 

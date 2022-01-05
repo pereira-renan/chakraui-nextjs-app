@@ -1,28 +1,31 @@
+import React, { useState, useEffect, useCallback } from "react"
+import { getData } from "./api/status"
 import { Flex, Box } from "@chakra-ui/react"
-
-import { baseUrl, fetchApi } from "../utils/fetchApi"
-
-import { ContactStatus, StatusColumns } from "../components/ContactStatus"
-
+import { Status } from "../components/ContactStatus"
 import { SandInfo, SandOverview } from "../components/KeyInfo"
 
-export default function Home({ contacts, channel, keyword, credit }) {
+export default function Test({
+  contacts,
+  channel,
+  keyword,
+  credit,
+  lastExecutionTime,
+  lastExecutionDate,
+}) {
   return (
     <Flex justifyContent={"center"}>
       <Flex
         flexDirection={"column"}
-        paddingTop="4"
+        paddingTop={"10vh"}
         paddingBottom="40"
         textAlign={"center"}
-        W={"60vw"}
+        w={"40vw"}
       >
-        <Box>
-          <StatusColumns />
-          {contacts.map((id) => (
-            <ContactStatus contact={id} key={id.id} />
-          ))}
-          <Box h="10px" bg="#f72717" borderBottomRadius="10px" />
-        </Box>
+        <Status
+          contacts={contacts}
+          time={lastExecutionTime}
+          date={lastExecutionDate}
+        />
         <SandOverview credit={credit} />
         <SandInfo key={"1"} channel={channel} keyword={keyword} />
       </Flex>
@@ -30,16 +33,18 @@ export default function Home({ contacts, channel, keyword, credit }) {
   )
 }
 
+/* Retrieves pet(s) data from mongodb database */
 export async function getServerSideProps() {
-  const zenStatus = await fetchApi(baseUrl).then((response) => {
-    return response
-  })
+  const response = await getData()
+  console.log(response)
   return {
     props: {
-      channel: zenStatus?.channel,
-      keyword: zenStatus?.keyword,
-      contacts: zenStatus?.contacts,
-      credit: zenStatus?.credit,
+      channel: response?.statuses.channel,
+      keyword: response?.statuses.keyword,
+      contacts: response?.statuses.contacts,
+      credit: response?.statuses.credit,
+      lastExecutionTime: response?.metadata.lastExecutionTime,
+      lastExecutionDate: response?.metadata.lastExecutionDate,
     },
   }
 }

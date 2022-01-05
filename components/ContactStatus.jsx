@@ -1,21 +1,27 @@
-import { Center, Text, Grid, Box } from "@chakra-ui/react"
+import { Center, Text, Grid, Box, IconButton } from "@chakra-ui/react"
+import { GrUpdate } from "react-icons/gr"
+import React, { useState, useEffect } from "react"
+import { useRouter } from "next/router"
+import Router from "next/router"
+import NProgress from "nprogress"
 
 const firstColumn = "120px",
   secondColumn = "30px",
-  thirdColumn = "30px"
+  thirdColumn = "30px",
+  tableOutsideColor = "gray.400",
+  tableInsideColor = "gray.700"
 
 const StatusColumns = ({
   phoneNumber = "Number",
   messagesLeft = "Interactions\nLeft",
-  expiresAt = "Renewed by",
+  expiresAt = "Renewed at",
 }) => (
   <Grid
     templateColumns="repeat(3, 1fr)"
     gap={6}
-    bg="#f72717"
-    borderTopRadius="20px"
+    bg={tableOutsideColor}
     fontWeight="semibold"
-    color="white"
+    color="black"
   >
     <Center minHeight="50px" minWidth={firstColumn}>
       {phoneNumber}
@@ -33,7 +39,7 @@ const ContactStatus = ({
     credit: { remaining, expiresAt },
   },
 }) => (
-  <Box py="10px" color="black" bg="gray.300" borderTop="solid 1px">
+  <Box py="10px" color="white" bg={tableInsideColor} borderTop="solid 1px">
     <Grid templateColumns="repeat(3, 1fr)" gap={6} minH="20px">
       <Center minWidth={firstColumn}>{id.replace(/\d(?=\d{4})/g, "*")}</Center>
       <Center minWidth={secondColumn} textAlign="center">
@@ -57,9 +63,50 @@ const ContactStatus = ({
   </Box>
 )
 
-const Status = () => (
-  <Box>
-    <StatusColumns />
-  </Box>
-)
+function Status({ contacts, time, date }) {
+  // Similar ao componentDidMount e componentDidUpdate:
+  useEffect(() => {
+    //fetchGames() // Fetch games when component is mounted
+  }, [])
+  const router = useRouter()
+
+  const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
+  const updateData = async () => {
+    fetch("/api/status", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => res.json("Updated."))
+      .catch((err) => console.log("Error while updating."))
+    await delay(1000)
+    router.push("/updating")
+    await delay(4000)
+    router.push("/")
+  }
+
+  return (
+    <Box>
+      <IconButton
+        icon={<GrUpdate />}
+        bg="#fc8181"
+        aria-label="Color mode switcher"
+        onClick={updateData}
+      >
+        Switch Mode
+      </IconButton>
+      <Box paddingY={"10px"}>
+        Last updated {date} at {time}
+      </Box>
+      <StatusColumns />
+      {contacts.map((id) => (
+        <ContactStatus contact={id} key={id.id} />
+      ))}
+      <Box h="10px" bg={tableOutsideColor} />
+    </Box>
+  )
+}
+
 export { ContactStatus, StatusColumns, Status }

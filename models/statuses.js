@@ -1,26 +1,29 @@
-const mongoose = require("mongoose")
-const Schema = mongoose.Schema
+import mongoose from "mongoose"
 
-const statusSchema = new Schema(
-  {
-    metadata: {
-      lastExecutionDate: String,
-      lastExecutionTime: String,
-    },
-    statuses: {
-      keyword: String,
-      statusDetail: [
-        {
-          _id: false,
-          phoneNumber: String,
-          messagesLeft: String,
-        },
-      ],
-    },
+const StatusSchema = new mongoose.Schema({
+  metadata: {
+    lastExecutionDate: String,
+    lastExecutionTime: String,
+    timeElapsed: String,
   },
-  { timestamps: true }
-)
+  statuses: {
+    channel: String,
+    keyword: String,
+    credit: {
+      remaining: Number,
+      expiresAt: String,
+    },
+    contacts: [
+      {
+        _id: false,
+        id: String,
+        credit: {
+          remaining: Number,
+          expiresAt: String,
+        },
+      },
+    ],
+  },
+})
 
-const Status = mongoose.model("statuses", statusSchema)
-
-module.exports = Status
+export default mongoose.models.Status || mongoose.model("Status", StatusSchema)

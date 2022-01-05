@@ -1,8 +1,10 @@
 import axios from "axios"
+import Status from "../models/statuses"
 
-export const baseUrl = process.env.baseUrl
+const url = process.env.baseUrl
+var data = {}
 
-export const fetchApi = async (url) => {
+export const fetchApi = async () => {
   const { data } = await axios.get(url, {
     headers: {
       Authorization: `Bearer ${process.env.customKey}`,
