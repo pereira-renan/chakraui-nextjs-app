@@ -20,7 +20,6 @@ export default function Test({
         paddingTop={"10vh"}
         paddingBottom="40"
         textAlign={"center"}
-        w={"40vw"}
       >
         <Status
           contacts={contacts}
