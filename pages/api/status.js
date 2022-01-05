@@ -25,7 +25,6 @@ export default async function handler(req, res) {
       }
       break
     case "POST":
-      console.log("debug1")
       try {
         var begin = Date.now()
         var lastExecutionDate = new Date()
@@ -41,7 +40,6 @@ export default async function handler(req, res) {
             Authorization: `Bearer ${process.env.customKey}`,
           },
         })
-        console.log("debug3")
 
         var channel = data.channel
         var keyword = data.keyword
@@ -102,7 +100,7 @@ export default async function handler(req, res) {
             console.log(err)
           })
 
-        res.status(200).json({ success: true, data: zenStatus })
+        res.status(200).json({ success: true })
       } catch (error) {
         res.status(400).json({ success: false })
       }
